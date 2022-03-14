@@ -47,8 +47,6 @@ def Login():
             self.root.title('TweetSA')
             self.var_usr_name = tk.StringVar()
             self.var_usr_pwd = tk.StringVar()
-            self.new = 1
-            self.url = "https://tweetdeck.twitter.com/"
             self.createPage()
 
         def createPage(self):
@@ -63,7 +61,7 @@ def Login():
             img = Image.open(resource_path('icon.png'))
             resized_img = img.resize((50, 41))
             new_img = ImageTk.PhotoImage(resized_img)
-            title_label = tk.ttk.Label(self.page, text=" Twitter Extraction ", compound="left", background='#1DA1F2',
+            title_label = tk.ttk.Label(self.page, text=" Tweet Search & Analysis ", compound="left", background='#1DA1F2',
                                        image=new_img, foreground="white", font=("Times New Roman", 22, 'bold')).grid(
                 row=0,
                 column=0,
@@ -119,7 +117,7 @@ def Login():
 
                 # if cannot find the user, creat a file with a Admin 'python'
                 with open('usrs_info.pickle', 'wb') as usr_file:
-                    usrs_info = {'admin': '12345'}
+                    usrs_info = {'administrator': 'integeralpha888'}
                     pickle.dump(usrs_info, usr_file)
                     usr_file.close()
 
@@ -140,7 +138,7 @@ def Login():
                 if usr_name in usrs_info:
 
                     if usr_pwd == usrs_info[usr_name]:
-                        tkinter.messagebox.showinfo(message='Welcome ! ' + usr_name)
+                        tkinter.messagebox.showinfo(message='Welcome to TweetSA, ' + usr_name+'!')
                         # userid = usr_name
                         destroy(root)
                         userid = usr_name
@@ -152,10 +150,14 @@ def Login():
 
                     # if username match while password wrong
                     else:
-                        tkinter.messagebox.showerror(message='Error, your password is wrong, try again.')
+                        tkinter.messagebox.showerror('Warning',
+                                                     'The password you entered does not match the current account, '
+                                                     'please check your entry for errors and login again.')
 
                 else:  # if cannot find the username in file
-                    is_sign_up = tkinter.messagebox.askyesno('Hi there', 'You have not sign up yet. Please sign up')
+                    is_sign_up = tkinter.messagebox.askyesno('App System Notifications',
+                                                             'Your account has not been registered in the local system. '
+                                                             'Please sign up first.')
                     # ask for sign up
                     if is_sign_up:
                         self.page.destroy()
@@ -172,35 +174,56 @@ def Login():
     class SignupPage(object):
         def __init__(self, master=None):
             self.root = master
-            self.root.title('Python Expenses Recorder')
-            self.root.geometry('700x500')
-            self.root.configure(bg='aliceblue')
+            self.root.title('TweetSA')
             self.new_name = tk.StringVar()
             self.new_pwd = tk.StringVar()
             self.new_pwd_confirm = tk.StringVar()
             self.createPage()
 
         def createPage(self):
-            self.page = tk.Frame(self.root)
-            self.page.configure(bg='aliceblue')
-            self.page.pack()
-            tk.Label(self.page, text='\n\nSign Up Now\n', font=('Arial', 20), fg='black',
-                     bg='aliceblue').pack()
-            tk.Label(self.page, text='Username', font=('Arial', 15), fg='black', bg='aliceblue').pack()
-            tk.Entry(self.page, textvariable=self.new_name, font=('Arial', 15), fg='black', bg='white',
-                     highlightbackground='whitesmoke').pack()
-            tk.Label(self.page, text='Password', font=('Arial', 15), fg='black', bg='aliceblue').pack()
-            tk.Entry(self.page, textvariable=self.new_pwd, show='*', font=('Arial', 15), fg='black', bg='white',
-                     highlightbackground='whitesmoke').pack()
-            tk.Label(self.page, text='Confirm Password', font=('Arial', 15), fg='black', bg='aliceblue').pack()
-            tk.Entry(self.page, textvariable=self.new_pwd_confirm, show='*', font=('Arial', 15), fg='black', bg='white',
-                     highlightbackground='whitesmoke').pack()
-            tk.Label(self.page, text='111', fg='aliceblue', bg='aliceblue').pack()
-            tk.Button(self.page, text='SIGN UP', command=self.sign_to_python, width=15, height=2, font=('Arial', 10),
-                      fg='black').pack()
-            tk.Label(self.page, text='111', font=('Arial', 1), fg='aliceblue', bg='aliceblue').pack()
-            tk.Button(self.page, text='BACK', command=self.Back, width=15, height=2, font=('Arial', 10),
-                      fg='black').pack()
+            self.page = tk.ttk.Frame(self.root)
+            # Set the initial theme
+            style = ttkthemes.ThemedStyle(self.root)
+            style.set_theme("ubuntu")
+            title_label = tk.ttk.Label(self.page, text=" Tweet Search & Analysis ", compound="left",
+                                       background='#1DA1F2',
+                                       image=new_img, foreground="white", font=("Times New Roman", 22, 'bold')).grid(
+                row=0,
+                column=1,
+                rowspan=2,
+                columnspan=6)
+            blue_label = tk.ttk.Label(self.page, text=' ', background='#1DA1F2').grid(row=0, column=0, rowspan=2,
+                                                                                      columnspan=1, sticky='nswe')
+            blue_label2 = tk.ttk.Label(self.page, text=' ', background='#1DA1F2').grid(row=0, column=7, rowspan=2,
+                                                                                       columnspan=1, sticky='nswe')
+            blank_label = tk.ttk.Label(self.page).grid(row=2, column=0, rowspan=1, columnspan=6)
+            blank_label2 = tk.ttk.Label(self.page).grid(row=9, column=0, rowspan=1, columnspan=6)
+            blank_label3 = tk.ttk.Label(self.page).grid(row=15, column=0, rowspan=1, columnspan=6)
+
+            user_label = tk.ttk.Label(self.page, text='User ID', font=('calibre', 10, 'bold'))
+            user_entry = tk.ttk.Entry(self.page, textvariable=self.new_name, font=('calibre', 10, 'normal'))
+
+            psw_label = tk.ttk.Label(self.page, text='Password', font=('calibre', 10, 'bold'))
+            psw_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd, font=('calibre', 10, 'normal'))
+
+            psw_confirm_label = tk.ttk.Label(self.page, text='Confirm Password', font=('calibre', 10, 'bold'))
+            psw_confirm_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd_confirm, font=('calibre', 10, 'normal'))
+
+            signup_btn = tk.ttk.Button(self.page, text='Sign up', command=self.sign_to_python)
+            back_btn = tk.ttk.Button(self.page, text='Back', command=self.Back)
+
+            user_label.grid(row=3, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            user_entry.grid(row=3, column=3, rowspan=2, columnspan=4, sticky='nswe')
+            psw_label.grid(row=5, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            psw_entry.grid(row=5, column=3, rowspan=2, columnspan=4, sticky='nswe')
+            psw_confirm_label.grid(row=7, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            psw_confirm_entry.grid(row=7, column=3, rowspan=2, columnspan=4, sticky='nswe')
+
+            back_btn.grid(row=11, column=0, rowspan=2, columnspan=4)
+            signup_btn.grid(row=11, column=4, rowspan=2, columnspan=4)
+
+            self.page.grid()
+
 
         def sign_to_python(self):
             np = self.new_pwd.get()
@@ -219,32 +242,38 @@ def Login():
             except FileNotFoundError:
                 # if cannot find the user, creat a file with a Admin 'python'
                 with open('usrs_info.pickle', 'wb') as usr_file:
+                    exist_usr_info = []
                     usrs_info = {'python': 'python'}
                     pickle.dump(usrs_info, usr_file)
                     usr_file.close()
 
+
                     # If username already exit in the file
             if nn in exist_usr_info:
-                is_reset_pwd = tkinter.messagebox.showerror('Hi there',
-                                                            'Sorry. This username have been taken, please change.')
+                is_reset_pwd = tkinter.messagebox.showerror('Warning',
+                                                            'Sorry, the username already exists, '
+                                                            'please register with a different username.')
             elif np != npf:
-                tkinter.messagebox.showerror('Error',
-                                             'Password and confirm password must be the same!')
+                tkinter.messagebox.showerror('Warning',
+                                             'Please make sure your passwords match!')
             else:
                 if len(nn) > 15:
-                    tkinter.messagebox.showerror('Error', 'Username must be less than 15 characters!')
+                    tkinter.messagebox.showerror('Warning', 'User ID must be less than 15 characters.')
                 elif len(nn) < 1:
-                    tkinter.messagebox.showerror('Error', 'Please enter a username.')
+                    tkinter.messagebox.showerror('Warning', 'User ID can not be empty.')
                 else:
                     if len(np) > 15:
-                        tkinter.messagebox.showerror('Error', 'Password must be less than 15 characters!')
+                        tkinter.messagebox.showerror('Warning', 'Password must be less than 15 characters.')
                     elif len(np) < 3:
-                        tkinter.messagebox.showerror('Error', 'Password must be more than 3 characters')
+                        tkinter.messagebox.showerror('Warning', 'Password must be more than 3 characters')
                     else:
                         exist_usr_info[nn] = np
                         with open('usrs_info.pickle', 'wb') as usr_file:
                             pickle.dump(exist_usr_info, usr_file)
-                            tkinter.messagebox.showinfo('Welcome', 'You have successfully signed up!')
+                            tkinter.messagebox.showinfo('App System Notifications',
+                                                        'Your account has been successfully registered '
+                                                        'to the local system. Please go back to the main page and '
+                                                        'log in with your account and password.')
                             self.page.destroy()
                             LoginPage(self.root)
 
@@ -255,9 +284,7 @@ def Login():
     class ResetPage(object):
         def __init__(self, master=None):
             self.root = master
-            self.root.title('Python Expenses Recorder')
-            self.root.geometry('700x500')
-            self.root.configure(bg='aliceblue')
+            self.root.title('TweetSA')
             self.usr_name1 = tk.StringVar()
             self.old_pwd = tk.StringVar()
             self.new_pwd = tk.StringVar()
@@ -266,29 +293,55 @@ def Login():
             self.createPage()
 
         def createPage(self):
-            self.page = tk.Frame(self.root)
-            self.page.configure(bg='aliceblue')
-            self.page.pack()
-            tk.Label(self.page, text='\n\nReset Your Password', font=('Arial', 20), fg='black',
-                     bg='aliceblue').pack()
-            tk.Label(self.page, text='Username', font=('Arial', 15), fg='black', bg='aliceblue').pack()
-            tk.Entry(self.page, textvariable=self.usr_name1, font=('Arial', 15), fg='black', bg='white',
-                     highlightbackground='whitesmoke').pack()
-            tk.Label(self.page, text='Old Password', font=('Arial', 15), fg='black', bg='aliceblue').pack()
-            tk.Entry(self.page, textvariable=self.old_pwd, show='*', font=('Arial', 15), fg='black', bg='white',
-                     highlightbackground='whitesmoke').pack()
-            tk.Label(self.page, text='New Password', font=('Arial', 15), fg='black', bg='aliceblue').pack()
-            tk.Entry(self.page, textvariable=self.new_pwd, show='*', font=('Arial', 15), fg='black', bg='white',
-                     highlightbackground='whitesmoke').pack()
-            tk.Label(self.page, text='Confirm Password', font=('Arial', 15), fg='black', bg='aliceblue').pack()
-            tk.Entry(self.page, textvariable=self.new_pwd_confirm, show='*', font=('Arial', 15), fg='black', bg='white',
-                     highlightbackground='whitesmoke').pack()
-            tk.Label(self.page, text='111', fg='aliceblue', bg='aliceblue').pack()
-            tk.Button(self.page, text='RESET', command=self.reset_pwd_python, width=15, height=2, font=('Arial', 10),
-                      fg='black').pack()
-            tk.Label(self.page, text='111', font=('Arial', 1), fg='aliceblue', bg='aliceblue').pack()
-            tk.Button(self.page, text='BACK', command=self.Back, width=15, height=2, font=('Arial', 10),
-                      fg='black').pack()
+            self.page = tk.ttk.Frame(self.root)
+            # Set the initial theme
+            style = ttkthemes.ThemedStyle(self.root)
+            style.set_theme("ubuntu")
+            title_label = tk.ttk.Label(self.page, text=" Tweet Search & Analysis ", compound="left",
+                                       background='#1DA1F2',
+                                       image=new_img, foreground="white", font=("Times New Roman", 22, 'bold')).grid(
+                row=0,
+                column=1,
+                rowspan=2,
+                columnspan=6)
+            blue_label = tk.ttk.Label(self.page, text=' ', background='#1DA1F2').grid(row=0, column=0, rowspan=2,
+                                                                                      columnspan=1, sticky='nswe')
+            blue_label2 = tk.ttk.Label(self.page, text=' ', background='#1DA1F2').grid(row=0, column=7, rowspan=2,
+                                                                                       columnspan=1, sticky='nswe')
+            blank_label = tk.ttk.Label(self.page).grid(row=2, column=0, rowspan=1, columnspan=6)
+            blank_label2 = tk.ttk.Label(self.page).grid(row=11, column=0, rowspan=1, columnspan=6)
+            blank_label3 = tk.ttk.Label(self.page).grid(row=15, column=0, rowspan=1, columnspan=6)
+
+            user_label = tk.ttk.Label(self.page, text='User ID', font=('calibre', 10, 'bold'))
+            user_entry = tk.ttk.Entry(self.page, textvariable=self.usr_name1, font=('calibre', 10, 'normal'))
+
+            psw_old_label = tk.ttk.Label(self.page, text='Original Password', font=('calibre', 10, 'bold'))
+            psw_old_entry = tk.ttk.Entry(self.page, textvariable=self.old_pwd, font=('calibre', 10, 'normal'))
+
+            psw_label = tk.ttk.Label(self.page, text='New Password', font=('calibre', 10, 'bold'))
+            psw_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd, font=('calibre', 10, 'normal'))
+
+            psw_confirm_label = tk.ttk.Label(self.page, text='Confirm Password', font=('calibre', 10, 'bold'))
+            psw_confirm_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd_confirm,
+                                             font=('calibre', 10, 'normal'))
+
+            reset_btn = tk.ttk.Button(self.page, text='Reset Password', command=self.reset_pwd_python)
+            back_btn = tk.ttk.Button(self.page, text='Back', command=self.Back)
+
+            user_label.grid(row=3, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            user_entry.grid(row=3, column=3, rowspan=2, columnspan=4, sticky='nswe')
+            psw_old_label.grid(row=5, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            psw_old_entry.grid(row=5, column=3, rowspan=2, columnspan=4, sticky='nswe')
+            psw_label.grid(row=7, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            psw_entry.grid(row=7, column=3, rowspan=2, columnspan=4, sticky='nswe')
+            psw_confirm_label.grid(row=9, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            psw_confirm_entry.grid(row=9, column=3, rowspan=2, columnspan=4, sticky='nswe')
+
+            back_btn.grid(row=13, column=0, rowspan=2, columnspan=4)
+            reset_btn.grid(row=13, column=4, rowspan=2, columnspan=4)
+
+            self.page.grid()
+
 
         def reset_pwd_python(self):
             un = self.usr_name1.get()
@@ -307,8 +360,9 @@ def Login():
                     exist_usr_info = pickle.load(usr_file)
             except FileNotFoundError:
                 # if cannot find the user, creat a file with a Admin 'python'
-                is_sign_up1 = tkinter.messagebox.askyesno('Error',
-                                                          'You didn\'t sign up before, would you like to sign up?')
+                is_sign_up1 = tkinter.messagebox.askyesno('Warning',
+                                                          'Your account has not been registered on the local system. '
+                                                          'Do you want to register now?')
                 if is_sign_up1:
                     self.page.destroy()
                     SignupPage(self.root)
@@ -318,27 +372,30 @@ def Login():
                 if op == exist_usr_info[un]:
                     if np == npc:
                         if op == np:
-                            tkinter.messagebox.showerror('Error', 'New password and old password cannot be the same!')
+                            tkinter.messagebox.showerror('Warning', 'Your new password should not be the same as '
+                                                                    'your current password')
                         else:
                             if len(np) > 15:
-                                tkinter.messagebox.showerror('Error', 'Password must be less than 15 characters!')
+                                tkinter.messagebox.showerror('Warning', 'Password must be less than 15 characters.')
                             elif len(np) < 3:
-                                tkinter.messagebox.showerror('Error', 'Password must be more than 3 characters')
+                                tkinter.messagebox.showerror('Warning', 'Password must be more than 3 characters')
                             else:
                                 exist_usr_info[un] = np
                                 with open('usrs_info.pickle', 'wb') as usr_file:
                                     pickle.dump(exist_usr_info, usr_file)
-                                    tkinter.messagebox.showinfo('Thank you',
-                                                                'You have successfully reset the password!')
+                                    tkinter.messagebox.showinfo('App System Notifications',
+                                                                'You have successfully reset your password.')
                                     self.page.destroy()
                                     LoginPage(self.root)
                     else:
-                        tkinter.messagebox.showerror('Error', 'New password and confirm password must be the same!')
+                        tkinter.messagebox.showerror('Warning', 'Please make sure your passwords match!')
                 else:
-                    tkinter.messagebox.showerror('Error', 'The old password is wrong')
+                    tkinter.messagebox.showerror('Warning', 'The password you entered for your account is incorrect. '
+                                                            'Please check your entry for errors and try again.')
             else:
-                is_sign_up2 = tkinter.messagebox.askyesno('Error',
-                                                          'The username you enter did\'n sign up before, would you like to sign up?')
+                is_sign_up2 = tkinter.messagebox.askyesno('Warning',
+                                                          'Your account has not been registered on the local system. '
+                                                          'Do you want to register now?')
                 if is_sign_up2:
                     self.page.destroy()
                     SignupPage(self.root)
