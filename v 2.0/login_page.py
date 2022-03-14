@@ -1,4 +1,6 @@
 import tkinter as tk
+
+import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import date
 from pandas import DataFrame
@@ -50,49 +52,47 @@ def Login():
             self.createPage()
 
         def createPage(self):
-            win = tk.ttk.Frame(self.root)
+            self.page = tk.ttk.Frame(self.root)
             # Set the initial theme
             style = ttkthemes.ThemedStyle(self.root)
             style.set_theme("ubuntu")
 
+            global img
+            global resized_img
+            global new_img
             img = Image.open(resource_path('icon.png'))
             resized_img = img.resize((50, 41))
             new_img = ImageTk.PhotoImage(resized_img)
-            title_label = tk.ttk.Label(win, text=" Twitter Extraction ", compound="left", background='#1DA1F2',
+            title_label = tk.ttk.Label(self.page, text=" Twitter Extraction ", compound="left", background='#1DA1F2',
                                        image=new_img, foreground="white", font=("Times New Roman", 22, 'bold')).grid(
                 row=0,
                 column=0,
                 rowspan=2,
-                columnspan=6)
-            blank_label = tk.ttk.Label(win).grid(row=2, column=0, rowspan=1, columnspan=6)
-            blank_label2 = tk.ttk.Label(win).grid(row=7, column=0, rowspan=1, columnspan=6)
+                columnspan=8)
+            blank_label = tk.ttk.Label(self.page).grid(row=2, column=0, rowspan=1, columnspan=6)
+            blank_label2 = tk.ttk.Label(self.page).grid(row=7, column=0, rowspan=1, columnspan=6)
+            blank_label3 = tk.ttk.Label(self.page).grid(row=15, column=0, rowspan=1, columnspan=6)
 
-            user_label = tk.ttk.Label(win, text='User ID', font=('calibre', 10, 'bold'))
-            user_entry = tk.ttk.Entry(win, textvariable=self.var_usr_name, font=('calibre', 10, 'normal'))
+            user_label = tk.ttk.Label(self.page, text='User ID', font=('calibre', 10, 'bold'))
+            user_entry = tk.ttk.Entry(self.page, textvariable=self.var_usr_name, font=('calibre', 10, 'normal'))
 
-            psw_label = tk.ttk.Label(win, text='Password', font=('calibre', 10, 'bold'))
-            psw_entry = tk.ttk.Entry(win, textvariable=self.var_usr_pwd, font=('calibre', 10, 'normal'))
+            psw_label = tk.ttk.Label(self.page, text='Password', font=('calibre', 10, 'bold'))
+            psw_entry = tk.ttk.Entry(self.page, textvariable=self.var_usr_pwd, font=('calibre', 10, 'normal'))
 
-            login_btn = tk.ttk.Button(win, text='Login', command=self.usr_login)
-            signup_btn = tk.ttk.Button(win, text='Sign up to open an account', command=self.usr_sign_up_b)
-            reset_btn = tk.ttk.Button(win, text='Analyze Word Frequency', command=self.usr_reset_pwd_b)
+            login_btn = tk.ttk.Button(self.page, text='Login', command=self.usr_login)
+            signup_btn = tk.ttk.Button(self.page, text='Sign up to open an account', command=self.usr_sign_up_b)
+            reset_btn = tk.ttk.Button(self.page, text='Reset password', command=self.usr_reset_pwd_b)
 
-            user_label.grid(row=3, column=0, rowspan=2, columnspan=2, sticky='nswe')
-            user_entry.grid(row=3, column=2, rowspan=2, columnspan=4, sticky='nswe')
-            psw_label.grid(row=5, column=0, rowspan=2, columnspan=2, sticky='nswe')
-            psw_entry.grid(row=5, column=2, rowspan=2, columnspan=4, sticky='nswe')
+            user_label.grid(row=3, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            user_entry.grid(row=3, column=3, rowspan=2, columnspan=4, sticky='nswe')
+            psw_label.grid(row=5, column=1, rowspan=2, columnspan=2, sticky='nswe')
+            psw_entry.grid(row=5, column=3, rowspan=2, columnspan=4, sticky='nswe')
 
-            login_btn.grid(row=9, column=0, rowspan=2, columnspan=6)
-            signup_btn.grid(row=11, column=0, rowspan=2, columnspan=6)
-            reset_btn.grid(row=13, column=0, rowspan=2, columnspan=6)
+            login_btn.grid(row=9, column=0, rowspan=2, columnspan=8)
+            signup_btn.grid(row=11, column=0, rowspan=2, columnspan=8)
+            reset_btn.grid(row=13, column=0, rowspan=2, columnspan=8)
 
-            img2 = Image.open(resource_path('twitter.png'))
-            resized_img2 = img2.resize((140, 140))
-            new_img2 = ImageTk.PhotoImage(resized_img2)
-            tweetdeck_btn = tk.Button(win, image=new_img2, border="0", command=self.openweb)
-            tweetdeck_btn.grid(row=22, column=0, rowspan=10, columnspan=2)
-
-            win.grid()
+            self.page.grid()
 
 
 
