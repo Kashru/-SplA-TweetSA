@@ -75,7 +75,7 @@ def Login():
             user_entry = tk.ttk.Entry(self.page, textvariable=self.var_usr_name, font=('calibre', 10, 'normal'))
 
             psw_label = tk.ttk.Label(self.page, text='Password', font=('calibre', 10, 'bold'))
-            psw_entry = tk.ttk.Entry(self.page, textvariable=self.var_usr_pwd, font=('calibre', 10, 'normal'))
+            psw_entry = tk.ttk.Entry(self.page, textvariable=self.var_usr_pwd, font=('calibre', 10, 'normal'), show='*')
 
             login_btn = tk.ttk.Button(self.page, text='Login', command=self.usr_login)
             signup_btn = tk.ttk.Button(self.page, text='Sign up to open an account', command=self.usr_sign_up_b)
@@ -138,7 +138,7 @@ def Login():
                 if usr_name in usrs_info:
 
                     if usr_pwd == usrs_info[usr_name]:
-                        tkinter.messagebox.showinfo(message='Welcome to TweetSA, ' + usr_name+'!')
+                        tkinter.messagebox.showinfo('App System Notifications', message='Welcome to TweetSA, ' + usr_name+'!')
                         # userid = usr_name
                         destroy(root)
                         userid = usr_name
@@ -204,10 +204,11 @@ def Login():
             user_entry = tk.ttk.Entry(self.page, textvariable=self.new_name, font=('calibre', 10, 'normal'))
 
             psw_label = tk.ttk.Label(self.page, text='Password', font=('calibre', 10, 'bold'))
-            psw_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd, font=('calibre', 10, 'normal'))
+            psw_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd, font=('calibre', 10, 'normal'), show='*')
 
             psw_confirm_label = tk.ttk.Label(self.page, text='Confirm Password', font=('calibre', 10, 'bold'))
-            psw_confirm_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd_confirm, font=('calibre', 10, 'normal'))
+            psw_confirm_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd_confirm,
+                                             font=('calibre', 10, 'normal'), show='*')
 
             signup_btn = tk.ttk.Button(self.page, text='Sign up', command=self.sign_to_python)
             back_btn = tk.ttk.Button(self.page, text='Back', command=self.Back)
@@ -316,14 +317,14 @@ def Login():
             user_entry = tk.ttk.Entry(self.page, textvariable=self.usr_name1, font=('calibre', 10, 'normal'))
 
             psw_old_label = tk.ttk.Label(self.page, text='Original Password', font=('calibre', 10, 'bold'))
-            psw_old_entry = tk.ttk.Entry(self.page, textvariable=self.old_pwd, font=('calibre', 10, 'normal'))
+            psw_old_entry = tk.ttk.Entry(self.page, textvariable=self.old_pwd, font=('calibre', 10, 'normal'), show='*')
 
             psw_label = tk.ttk.Label(self.page, text='New Password', font=('calibre', 10, 'bold'))
-            psw_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd, font=('calibre', 10, 'normal'))
+            psw_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd, font=('calibre', 10, 'normal'), show='*')
 
             psw_confirm_label = tk.ttk.Label(self.page, text='Confirm Password', font=('calibre', 10, 'bold'))
             psw_confirm_entry = tk.ttk.Entry(self.page, textvariable=self.new_pwd_confirm,
-                                             font=('calibre', 10, 'normal'))
+                                             font=('calibre', 10, 'normal'), show='*')
 
             reset_btn = tk.ttk.Button(self.page, text='Reset Password', command=self.reset_pwd_python)
             back_btn = tk.ttk.Button(self.page, text='Back', command=self.Back)

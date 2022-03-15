@@ -99,7 +99,7 @@ def new_user_page(userid):
     budegte_entry.place(x=180, y=190)
 
     # Confirm & back button
-    btn_add = tk.Button(new_user, text='Add', width=13, command=lambda: addexp_success(new_date.get(), add_amount.get(), \
+    btn_add = tk.Button(new_user, text='Add', width=13, command=lambda: addexp_success(new_date.get(), add_amount.get(),
                                                                                        add_type.get(),
                                                                                        new_budget.get()))
     btn_add.place(x=200, y=230)
