@@ -15,4 +15,4 @@ import sys
 import os
 
 def stock_page(userid):
-    user_data = pd.read_excel('tweetsa_user_data.xlsx')
+    print(userid)

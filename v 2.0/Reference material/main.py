@@ -304,6 +304,8 @@ def Login():
 
     root = tk.Tk()
     LoginPage(root)
+    print('hi')
     root.mainloop()
+    print('shit')
 
 Login()

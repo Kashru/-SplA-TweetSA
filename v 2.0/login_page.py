@@ -15,13 +15,15 @@ import webbrowser
 from pandasgui import show
 import sys
 import os
-from signup_page import*
+from signup_page import *
 from stock_page import *
+
 
 def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
+
 
 def Login():
     def destroy(x):
@@ -34,7 +36,7 @@ def Login():
         window_admin = tk.Tk()
         window_admin.title('Administration')
         window_admin.configure(bg='black')
-        account_list = tkinter.Listbox(window_admin, fg = 'white', bg='black', font=('Arial', 15), bd=30, width=30)
+        account_list = tkinter.Listbox(window_admin, fg='white', bg='black', font=('Arial', 15), bd=30, width=30)
         account_list.pack()
 
         account_list.insert(tkinter.END, '| USERNAME / PASSWORD |')
@@ -61,7 +63,8 @@ def Login():
             img = Image.open(resource_path('icon.png'))
             resized_img = img.resize((50, 41))
             new_img = ImageTk.PhotoImage(resized_img)
-            title_label = tk.ttk.Label(self.page, text=" Tweet Search & Analysis ", compound="left", background='#1DA1F2',
+            title_label = tk.ttk.Label(self.page, text=" Tweet Search & Analysis ", compound="left",
+                                       background='#1DA1F2',
                                        image=new_img, foreground="white", font=("Times New Roman", 22, 'bold')).grid(
                 row=0,
                 column=0,
@@ -92,12 +95,8 @@ def Login():
 
             self.page.grid()
 
-
-
         def openweb(self):
             webbrowser.open(self.url, new=self.new)
-
-
 
         def usr_login(self):
             usr_name = self.var_usr_name.get()
@@ -138,7 +137,8 @@ def Login():
                 if usr_name in usrs_info:
 
                     if usr_pwd == usrs_info[usr_name]:
-                        tkinter.messagebox.showinfo('App System Notifications', message='Welcome to TweetSA, ' + usr_name+'!')
+                        tkinter.messagebox.showinfo('App System Notifications',
+                                                    message='Welcome to TweetSA, ' + usr_name + '!')
                         # userid = usr_name
                         destroy(root)
                         userid = usr_name
@@ -225,7 +225,6 @@ def Login():
 
             self.page.grid()
 
-
         def sign_to_python(self):
             np = self.new_pwd.get()
             npf = self.new_pwd_confirm.get()
@@ -247,7 +246,6 @@ def Login():
                     usrs_info = {'python': 'python'}
                     pickle.dump(usrs_info, usr_file)
                     usr_file.close()
-
 
                     # If username already exit in the file
             if nn in exist_usr_info:
@@ -343,7 +341,6 @@ def Login():
 
             self.page.grid()
 
-
         def reset_pwd_python(self):
             un = self.usr_name1.get()
             op = self.old_pwd.get()
@@ -405,8 +402,18 @@ def Login():
             self.page.destroy()
             LoginPage(self.root)
 
+    def close_login():
+        global signal
+        signal += 1
+        root.destroy()
+
     root = tk.Tk()
     LoginPage(root)
+    root.protocol('WM_DELETE_WINDOW', close_login)
     root.mainloop()
 
-Login()
+
+global signal
+signal = 1
+while signal == 1:
+    Login()
