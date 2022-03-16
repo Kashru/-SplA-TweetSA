@@ -43,7 +43,7 @@ def is_new_user(userid):
 
 
 def signup_page(userid):
-    global user_data
+    #global user_data
 
     file_exist = os.path.exists(resource_path('tweetsa_user_data.xlsx'))
     if not file_exist:
@@ -72,10 +72,12 @@ def signup_page(userid):
 
         user_data.to_excel('tweetsa_user_data.xlsx', index=False)
 
-        #tkinter.messagebox.showinfo('App System Notifications', message='The information you entered has been '
-                                                                        #'successfully stored in the system, '
-                                                                        #'please go to the main page for '
-                                                                        #'more operations.')
+        tkinter.messagebox.showinfo('App System Notifications', message='The information you entered has been '
+                                                                        'successfully stored in the system, '
+                                                                        'please go to the main page for '
+                                                                        'more operations.')
+        new_user.destroy()
+
 
     def back_to_login():
         new_user.destroy()
