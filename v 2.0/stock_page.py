@@ -14,6 +14,7 @@ from pandasgui import show
 import sys
 import os
 from openpyxl import Workbook
+from signup_page import *
 
 
 def resource_path(relative_path):
@@ -51,6 +52,28 @@ def stock_page(userid):
             tk.messagebox.showinfo("App System Notifications", "See you Again!")
             main.destroy()
 
+    def delete(listDisp):
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        msgBox = tk.messagebox.askyesno('App System Notifications', 'Are you sure you want to delete this item?')
+        if msgBox:
+            kw = listDisp.get(tk.ACTIVE)
+            keyword = []
+            keyword.append(kw)
+            listDisp.delete(tk.ACTIVE)
+
+            user_data = user_data[~user_data['keyword'].isin(keyword)]
+            user_data.to_excel('tweetsa_user_data.xlsx', index=False)
+
+    def add(listDisp, userid):
+        signup_page(userid, True)
+        listDisp.delete(0, tk.END)
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+
+        keyword_list = user_data['keyword'].unique()
+        for kw in keyword_list:
+            listDisp.insert(tk.END, kw)
+
+
     global img3
     global resized_img3
     global new_img3
@@ -76,11 +99,19 @@ def stock_page(userid):
         listDisp.insert(tk.END, kw)
     listScroll.config(command=listDisp.yview)
 
-    logout_btn = tk.ttk.Button(main_win, text='Log out',command=logout)
+    blank_label4 = tk.ttk.Label(main_win).grid(row=7, column=6, rowspan=2, columnspan=8)
+    logout_btn = tk.ttk.Button(main_win, text='Log out', command=logout)
+    logout_btn.grid(row=9, column=1, rowspan=2, columnspan=2, sticky='nswe')
+
+    delete_btn = tk.ttk.Button(main_win, text='Delete keyword', command=lambda: delete(listDisp))
+    delete_btn.grid(row=9, column=3, rowspan=2, columnspan=1, sticky='nswe')
+
+    add_btn = tk.ttk.Button(main_win, text='Add keyword', command=lambda: add(listDisp, userid))
+    add_btn.grid(row=9, column=4, rowspan=2, columnspan=1, sticky='nswe')
 
 
 
     main_win.grid()
     main.mainloop()
 
-#stock_page('test00')
+stock_page('test111')

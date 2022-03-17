@@ -143,7 +143,7 @@ def Login():
                         destroy(root)
                         userid = usr_name
                         if is_new_user(userid):
-                            signup_page(userid)
+                            signup_page(userid, False)
                             stock_page(str(userid))
                         else:
                             stock_page(str(userid))

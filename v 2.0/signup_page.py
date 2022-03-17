@@ -42,7 +42,7 @@ def is_new_user(userid):
             return False
 
 
-def signup_page(userid):
+def signup_page(userid, childwindow):
     #global user_data
 
     file_exist = os.path.exists(resource_path('tweetsa_user_data.xlsx'))
@@ -54,9 +54,10 @@ def signup_page(userid):
     else:
         user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
 
-
-
-    new_user = tk.Tk()
+    if childwindow:
+        new_user = tk.Toplevel()
+    else:
+        new_user = tk.Tk()
     new_user.title('TweetSA')
 
     new_user_win = tk.ttk.Frame(new_user)
@@ -66,6 +67,8 @@ def signup_page(userid):
 
     def add_keyword(keyword, attr_type, content):
         global user_data
+
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
 
         user_data = user_data.append({'keyword': keyword, 'type': attr_type, 'content': content, 'userId': userid},
                                      ignore_index=True)
@@ -79,8 +82,10 @@ def signup_page(userid):
         new_user.destroy()
 
 
+
     def back_to_login():
         new_user.destroy()
+
 
 
     global img2
@@ -131,14 +136,21 @@ def signup_page(userid):
 
     blank_label3 = tk.ttk.Label(new_user_win).grid(row=15, column=0, rowspan=2, columnspan=8)
 
-    finish_btn = tk.ttk.Button(new_user_win, text='Complete Registration',
-                               command=lambda: add_keyword(keyword.get(), attr_type.get(), attr_content.get()))
+    if childwindow:
+        finish_btn = tk.ttk.Button(new_user_win, text='Add Complete',
+                                   command=lambda: add_keyword(keyword.get(), attr_type.get(), attr_content.get()))
+    else:
+        finish_btn = tk.ttk.Button(new_user_win, text='Complete Registration',
+                                   command=lambda: add_keyword(keyword.get(), attr_type.get(), attr_content.get()))
     finish_btn.grid(row=17, column=3, rowspan=2, columnspan=4)
     bck_btn = tk.ttk.Button(new_user_win, text='Back', command=back_to_login)
     bck_btn.grid(row=17, column=1, rowspan=2, columnspan=2)
 
     new_user_win.grid()
-    new_user.mainloop()
+    if childwindow:
+        new_user_win.wait_window()
+    else:
+        new_user.mainloop()
 
 
-#signup_page('test00')
+#signup_page('test00', False)
