@@ -82,32 +82,32 @@ def stock_page(userid):
     new_img3 = ImageTk.PhotoImage(resized_img3)
     title_label = tk.ttk.Label(main_win, text=" Tweet Search & Analysis ", compound="left", background='#1DA1F2',
                                image=new_img3, foreground="white",
-                               font=("Times New Roman", 22, 'bold')).grid(row=0, column=0, rowspan=2, columnspan=8)
-    blank_label = tk.ttk.Label(main_win).grid(row=2, column=0, rowspan=1, columnspan=8)
-    blank_label2 = tk.ttk.Label(main_win, text='    ').grid(row=3, column=0, rowspan=2, columnspan=2)
-    blank_label3 = tk.ttk.Label(main_win, text='    ').grid(row=3, column=6, rowspan=2, columnspan=2)
+                               font=("Times New Roman", 22, 'bold')).grid(row=0, column=1, rowspan=2, columnspan=8)
+    blank_label_l = tk.ttk.Label(main_win, text='           ').grid(row=0, column=0, rowspan=2, columnspan=1)
+    blank_label_r = tk.ttk.Label(main_win, text='           ').grid(row=0, column=9, rowspan=2, columnspan=1)
+    blank_label = tk.ttk.Label(main_win).grid(row=2, column=0, rowspan=2, columnspan=10)
     list_label = tk.ttk.Label(main_win, text='Customized Keyword/Concept List', font=("Times New Roman", 18, 'bold')).\
-        grid(row=3, column=2, rowspan=2, columnspan=4, sticky='nswe')
+        grid(row=4, column=1, rowspan=2, columnspan=8)
 
     listScroll = tk.ttk.Scrollbar(main_win, orient=tk.VERTICAL)
-    listScroll.grid(row=5, column=6, rowspan=2, columnspan=1, sticky='nswe')
+    listScroll.grid(row=6, column=7, rowspan=2, columnspan=1, sticky='nswe')
     listDisp = tk.Listbox(main_win, selectmode=tk.BROWSE, yscrollcommand=listScroll.set, font=('Microsoft Light', 16))
-    listDisp.grid(row=5, column=2, rowspan=2, columnspan=4, sticky='nswe')
+    listDisp.grid(row=6, column=1, rowspan=2, columnspan=6, sticky='nswe')
 
     keyword_list = user_data['keyword'].unique()
     for kw in keyword_list:
         listDisp.insert(tk.END, kw)
     listScroll.config(command=listDisp.yview)
 
-    blank_label4 = tk.ttk.Label(main_win).grid(row=7, column=6, rowspan=2, columnspan=8)
+    blank_label4 = tk.ttk.Label(main_win).grid(row=8, column=6, rowspan=2, columnspan=8)
     logout_btn = tk.ttk.Button(main_win, text='Log out', command=logout)
-    logout_btn.grid(row=9, column=1, rowspan=2, columnspan=2, sticky='nswe')
+    logout_btn.grid(row=10, column=1, rowspan=2, columnspan=2, sticky='nswe')
 
     delete_btn = tk.ttk.Button(main_win, text='Delete keyword', command=lambda: delete(listDisp))
-    delete_btn.grid(row=9, column=3, rowspan=2, columnspan=1, sticky='nswe')
+    delete_btn.grid(row=10, column=3, rowspan=2, columnspan=1, sticky='nswe')
 
     add_btn = tk.ttk.Button(main_win, text='Add keyword', command=lambda: add(listDisp, userid))
-    add_btn.grid(row=9, column=4, rowspan=2, columnspan=1, sticky='nswe')
+    add_btn.grid(row=10, column=4, rowspan=2, columnspan=1, sticky='nswe')
 
 
 

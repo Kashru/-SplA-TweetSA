@@ -67,12 +67,14 @@ def Login():
                                        background='#1DA1F2',
                                        image=new_img, foreground="white", font=("Times New Roman", 22, 'bold')).grid(
                 row=0,
-                column=0,
+                column=1,
                 rowspan=2,
                 columnspan=8)
-            blank_label = tk.ttk.Label(self.page).grid(row=2, column=0, rowspan=1, columnspan=6)
-            blank_label2 = tk.ttk.Label(self.page).grid(row=7, column=0, rowspan=1, columnspan=6)
-            blank_label3 = tk.ttk.Label(self.page).grid(row=15, column=0, rowspan=1, columnspan=6)
+            blank_label_l = tk.ttk.Label(self.page, text='          ').grid(row=0, column=0, rowspan=1, columnspan=1)
+            blank_label_r = tk.ttk.Label(self.page, text='          ').grid(row=0, column=9, rowspan=1, columnspan=1)
+            blank_label = tk.ttk.Label(self.page).grid(row=2, column=0, rowspan=1, columnspan=10)
+            blank_label2 = tk.ttk.Label(self.page).grid(row=7, column=0, rowspan=1, columnspan=10)
+            blank_label3 = tk.ttk.Label(self.page).grid(row=15, column=0, rowspan=1, columnspan=10)
 
             user_label = tk.ttk.Label(self.page, text='User ID', font=('calibre', 10, 'bold'))
             user_entry = tk.ttk.Entry(self.page, textvariable=self.var_usr_name, font=('calibre', 10, 'normal'))
@@ -84,14 +86,14 @@ def Login():
             signup_btn = tk.ttk.Button(self.page, text='Sign up to open an account', command=self.usr_sign_up_b)
             reset_btn = tk.ttk.Button(self.page, text='Reset password', command=self.usr_reset_pwd_b)
 
-            user_label.grid(row=3, column=1, rowspan=2, columnspan=2, sticky='nswe')
-            user_entry.grid(row=3, column=3, rowspan=2, columnspan=4, sticky='nswe')
-            psw_label.grid(row=5, column=1, rowspan=2, columnspan=2, sticky='nswe')
-            psw_entry.grid(row=5, column=3, rowspan=2, columnspan=4, sticky='nswe')
+            user_label.grid(row=3, column=2, rowspan=2, columnspan=2, sticky='nswe')
+            user_entry.grid(row=3, column=4, rowspan=2, columnspan=4, sticky='nswe')
+            psw_label.grid(row=5, column=2, rowspan=2, columnspan=2, sticky='nswe')
+            psw_entry.grid(row=5, column=4, rowspan=2, columnspan=4, sticky='nswe')
 
-            login_btn.grid(row=9, column=0, rowspan=2, columnspan=8)
-            signup_btn.grid(row=11, column=0, rowspan=2, columnspan=8)
-            reset_btn.grid(row=13, column=0, rowspan=2, columnspan=8)
+            login_btn.grid(row=9, column=2, rowspan=2, columnspan=6, sticky='nswe')
+            signup_btn.grid(row=11, column=2, rowspan=2, columnspan=6, sticky='nswe')
+            reset_btn.grid(row=13, column=2, rowspan=2, columnspan=6, sticky='nswe')
 
             self.page.grid()
 
