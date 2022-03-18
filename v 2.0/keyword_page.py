@@ -39,8 +39,10 @@ def keyword_page(userid, keyword):
     img4 = Image.open(resource_path('icon.png'))
     resized_img4 = img4.resize((50, 41))
     new_img4 = ImageTk.PhotoImage(resized_img4)
-    blank_label_l = tk.ttk.Label(keyword_home_win, text='                 ').grid(row=0, column=0, rowspan=2, columnspan=2)
-    blank_label_r = tk.ttk.Label(keyword_home_win, text='                 ').grid(row=0, column=10, rowspan=2, columnspan=2)
+    blank_label_l = tk.ttk.Label(keyword_home_win, text='                 ').grid(row=0, column=0, rowspan=2,
+                                                                                  columnspan=2)
+    blank_label_r = tk.ttk.Label(keyword_home_win, text='                 ').grid(row=0, column=10, rowspan=2,
+                                                                                  columnspan=2)
     title_label = tk.ttk.Label(keyword_home_win, text=" Tweet Search & Analysis ", compound="left",
                                background='#1DA1F2',
                                image=new_img4, foreground="white",
@@ -48,7 +50,7 @@ def keyword_page(userid, keyword):
     blank_label = tk.ttk.Label(keyword_home_win).grid(row=2, column=0, rowspan=1, columnspan=12)
     blank_label2 = tk.ttk.Label(keyword_home_win, text='    ').grid(row=3, column=0, rowspan=2, columnspan=2)
     blank_label3 = tk.ttk.Label(keyword_home_win, text='    ').grid(row=3, column=8, rowspan=2, columnspan=2)
-    list_label = tk.ttk.Label(keyword_home_win, text='Keyword/Concept: '+keyword,
+    list_label = tk.ttk.Label(keyword_home_win, text='Keyword/Concept: ' + keyword,
                               font=("Times New Roman", 16, 'bold'), justify='center'). \
         grid(row=3, column=2, rowspan=2, columnspan=8)
 
@@ -61,25 +63,90 @@ def keyword_page(userid, keyword):
     blank_label5 = tk.ttk.Label(keyword_home_win).grid(row=9, column=8, rowspan=2, columnspan=12)
 
     tech_btn = tk.ttk.Button(keyword_home_win, text='Associated Technology',
-                            command=lambda: kw_technology(userid, keyword))
+                             command=lambda: kw_technology(userid, keyword))
     tech_btn.grid(row=11, column=3, rowspan=2, columnspan=6, sticky='nswe')
 
     blank_label6 = tk.ttk.Label(keyword_home_win).grid(row=13, column=8, rowspan=2, columnspan=12)
 
     cpt_btn = tk.ttk.Button(keyword_home_win, text='Correlated Concept',
-                             command=lambda: kw_concept(userid, keyword))
+                            command=lambda: kw_concept(userid, keyword))
     cpt_btn.grid(row=15, column=3, rowspan=2, columnspan=6, sticky='nswe')
 
     blank_label7 = tk.ttk.Label(keyword_home_win).grid(row=17, column=8, rowspan=2, columnspan=12)
 
     ev_btn = tk.ttk.Button(keyword_home_win, text='Influential Event',
-                            command=lambda: kw_event(userid, keyword))
+                           command=lambda: kw_event(userid, keyword))
     ev_btn.grid(row=19, column=3, rowspan=2, columnspan=6, sticky='nswe')
 
     blank_label7 = tk.ttk.Label(keyword_home_win).grid(row=21, column=8, rowspan=2, columnspan=12)
 
     keyword_home_win.grid()
     keyword_home.wait_window()
+
+
+def simplified_add_page(userid, keyword, type):
+    user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+
+    simp_add = tk.Toplevel()
+    simp_add.title('TweetSA')
+
+    simp_add_win = tk.ttk.Frame(simp_add)
+    # Set the initial theme
+    style = ttkthemes.ThemedStyle(simp_add)
+    style.set_theme("ubuntu")
+
+    def add_item(content):
+        global user_data
+
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+
+        user_data = pd.concat([user_data, pd.DataFrame({'keyword': keyword, 'type': type, 'content': content,
+                                                        'userId': userid}, index=[0])], ignore_index=True)
+
+        user_data.to_excel('tweetsa_user_data.xlsx', index=False)
+
+        tkinter.messagebox.showinfo('App System Notifications', message='The information you entered has been '
+                                                                        'successfully added to the system.')
+        simp_add.destroy()
+
+    global img9
+    global resized_img9
+    global new_img9
+    img9 = Image.open(resource_path('icon.png'))
+    resized_img9 = img9.resize((50, 41))
+    new_img9 = ImageTk.PhotoImage(resized_img9)
+    blank_label_l = tk.ttk.Label(simp_add_win, text='                 ').grid(row=0, column=0, rowspan=2, columnspan=2)
+    blank_label_r = tk.ttk.Label(simp_add_win, text='                 ').grid(row=0, column=10, rowspan=2, columnspan=2)
+    title_label = tk.ttk.Label(simp_add_win, text=" Tweet Search & Analysis ", compound="left",
+                               background='#1DA1F2',
+                               image=new_img9, foreground="white",
+                               font=("Times New Roman", 22, 'bold')).grid(row=0, column=2, rowspan=2, columnspan=8)
+    blank_label = tk.ttk.Label(simp_add_win).grid(row=2, column=0, rowspan=1, columnspan=12)
+    blank_label2 = tk.ttk.Label(simp_add_win, text='    ').grid(row=3, column=0, rowspan=2, columnspan=2)
+    blank_label3 = tk.ttk.Label(simp_add_win, text='    ').grid(row=3, column=8, rowspan=2, columnspan=2)
+    list_label = tk.ttk.Label(simp_add_win, text=keyword + ': ' + type,
+                              font=("Times New Roman", 16, 'bold'), justify='center'). \
+        grid(row=3, column=2, rowspan=2, columnspan=8)
+    blank_label4 = tk.ttk.Label(simp_add_win).grid(row=5, column=0, rowspan=2, columnspan=12)
+    list_label = tk.ttk.Label(simp_add_win,
+                              text='▼ Please enter the ' + type + ' you want to add in the field below ▼'). \
+        grid(row=7, column=2, rowspan=2, columnspan=8)
+    blank_label5 = tk.ttk.Label(simp_add_win).grid(row=9, column=0, rowspan=2, columnspan=12)
+    attr_content = tk.StringVar()
+    attr_content_entry = tk.ttk.Entry(simp_add_win, textvariable=attr_content, font=('calibre', 10, 'normal'))
+    attr_content_entry.grid(row=11, column=2, rowspan=2, columnspan=8, sticky='nwse')
+    blank_label7 = tk.ttk.Label(simp_add_win).grid(row=13, column=0, rowspan=2, columnspan=12)
+    add_btn = tk.ttk.Button(simp_add_win, text='Add Complete', command=lambda: add_item(attr_content.get()))
+    add_btn.grid(row=15, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    bck_btn = tk.ttk.Button(simp_add_win, text='Back', command=simp_add.destroy)
+    bck_btn.grid(row=15, column=2, rowspan=2, columnspan=3, sticky='nwse')
+    blank_label6 = tk.ttk.Label(simp_add_win).grid(row=17, column=0, rowspan=2, columnspan=12)
+
+    simp_add_win.grid()
+    simp_add.wait_window()
+
+
+#simplified_add_page('test111', 'btc', 'Significant Persons')
 
 
 def kw_people(userid, keyword):
@@ -128,8 +195,44 @@ def kw_people(userid, keyword):
 
     blank_label4 = tk.ttk.Label(kw_ppl_win).grid(row=7, column=0, rowspan=2, columnspan=12)
 
+    def add_ppl():
+        simplified_add_page(userid, keyword, 'Significant Related Persons')
+        listDisp.delete(0, tk.END)
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        require_data = user_data[user_data['userId'].isin([userid])]
+        require_data = require_data[require_data['keyword'].isin([keyword])]
+        require_data = require_data[require_data['type'].isin(['Significant Related Persons'])]
+        require_ppl = require_data['content'].unique()
+
+        for ppl in require_ppl:
+            listDisp.insert(tk.END, ppl)
+
+    def remove_ppl():
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        msgBox = tk.messagebox.askyesno('App System Notifications', 'Do you want to delete this item?')
+        if msgBox:
+            ppl = listDisp.get(tk.ACTIVE)
+            listDisp.delete(tk.ACTIVE)
+
+            user_data = user_data[~(user_data['userId'].isin([userid]) &
+                                    user_data['keyword'].isin([keyword]) &
+                                    user_data['type'].isin(['Significant Related Persons']) &
+                                    user_data['content'].isin([ppl]))]
+            user_data.to_excel('tweetsa_user_data.xlsx', index=False)
+
+    add_btn = tk.ttk.Button(kw_ppl_win, text='Add', command=add_ppl)
+    add_btn.grid(row=9, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    remove_btn = tk.ttk.Button(kw_ppl_win, text='Remove', command=remove_ppl)
+    remove_btn.grid(row=9, column=5, rowspan=2, columnspan=2, sticky='nwse')
+    bck_btn = tk.ttk.Button(kw_ppl_win, text='Back', command=kw_ppl.destroy)
+    bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
+    blank_label6 = tk.ttk.Label(kw_ppl_win).grid(row=11, column=0, rowspan=2, columnspan=12)
+
     kw_ppl_win.grid()
     kw_ppl.wait_window()
+
+
+kw_people('test111', 'eth')
 
 
 def kw_technology(userid, keyword):
@@ -169,7 +272,8 @@ def kw_technology(userid, keyword):
 
     listScroll = tk.ttk.Scrollbar(kw_tech_win, orient=tk.VERTICAL)
     listScroll.grid(row=5, column=10, rowspan=2, columnspan=1, sticky='nswe')
-    listDisp = tk.Listbox(kw_tech_win, selectmode=tk.BROWSE, yscrollcommand=listScroll.set, font=('Microsoft Light', 16))
+    listDisp = tk.Listbox(kw_tech_win, selectmode=tk.BROWSE, yscrollcommand=listScroll.set,
+                          font=('Microsoft Light', 16))
     listDisp.grid(row=5, column=2, rowspan=2, columnspan=8, sticky='nswe')
 
     for ppl in require_ppl:
@@ -281,5 +385,4 @@ def kw_event(userid, keyword):
     kw_ev_win.grid()
     kw_ev.wait_window()
 
-
-keyword_page('test111', 'btc')
+# keyword_page('test111', 'btc')

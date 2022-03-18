@@ -18,7 +18,6 @@ import os
 from openpyxl import Workbook
 
 
-
 def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
@@ -43,7 +42,7 @@ def is_new_user(userid):
 
 
 def signup_page(userid, childwindow):
-    #global user_data
+    # global user_data
 
     file_exist = os.path.exists(resource_path('tweetsa_user_data.xlsx'))
     if not file_exist:
@@ -70,8 +69,8 @@ def signup_page(userid, childwindow):
 
         user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
 
-        user_data = user_data.append({'keyword': keyword, 'type': attr_type, 'content': content, 'userId': userid},
-                                     ignore_index=True)
+        user_data = pd.concat([user_data, pd.DataFrame({'keyword': keyword, 'type': attr_type, 'content': content,
+                                                        'userId': userid}, index=[0])], ignore_index=True)
 
         user_data.to_excel('tweetsa_user_data.xlsx', index=False)
 
@@ -81,12 +80,8 @@ def signup_page(userid, childwindow):
                                                                         'more operations.')
         new_user.destroy()
 
-
-
     def back_to_login():
         new_user.destroy()
-
-
 
     global img2
     global resized_img2
@@ -152,5 +147,4 @@ def signup_page(userid, childwindow):
     else:
         new_user.mainloop()
 
-
-#signup_page('test00', False)
+# signup_page('test00', False)
