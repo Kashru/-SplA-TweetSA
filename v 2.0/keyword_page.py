@@ -232,7 +232,7 @@ def kw_people(userid, keyword):
     kw_ppl.wait_window()
 
 
-kw_people('test111', 'eth')
+# kw_people('test111', 'eth')
 
 
 def kw_technology(userid, keyword):
@@ -268,7 +268,7 @@ def kw_technology(userid, keyword):
     require_data = user_data[user_data['userId'].isin([userid])]
     require_data = require_data[require_data['keyword'].isin([keyword])]
     require_data = require_data[require_data['type'].isin(['Associated Technology'])]
-    require_ppl = require_data['content'].unique()
+    require_tech = require_data['content'].unique()
 
     listScroll = tk.ttk.Scrollbar(kw_tech_win, orient=tk.VERTICAL)
     listScroll.grid(row=5, column=10, rowspan=2, columnspan=1, sticky='nswe')
@@ -276,11 +276,44 @@ def kw_technology(userid, keyword):
                           font=('Microsoft Light', 16))
     listDisp.grid(row=5, column=2, rowspan=2, columnspan=8, sticky='nswe')
 
-    for ppl in require_ppl:
-        listDisp.insert(tk.END, ppl)
+    for tech in require_tech:
+        listDisp.insert(tk.END, tech)
     listScroll.config(command=listDisp.yview)
 
     blank_label4 = tk.ttk.Label(kw_tech_win).grid(row=7, column=0, rowspan=2, columnspan=12)
+
+    def add_tech():
+        simplified_add_page(userid, keyword, 'Associated Technology')
+        listDisp.delete(0, tk.END)
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        require_data = user_data[user_data['userId'].isin([userid])]
+        require_data = require_data[require_data['keyword'].isin([keyword])]
+        require_data = require_data[require_data['type'].isin(['Associated Technology'])]
+        require_tech = require_data['content'].unique()
+
+        for tech in require_tech:
+            listDisp.insert(tk.END, tech)
+
+    def remove_tech():
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        msgBox = tk.messagebox.askyesno('App System Notifications', 'Do you want to delete this item?')
+        if msgBox:
+            tech = listDisp.get(tk.ACTIVE)
+            listDisp.delete(tk.ACTIVE)
+
+            user_data = user_data[~(user_data['userId'].isin([userid]) &
+                                    user_data['keyword'].isin([keyword]) &
+                                    user_data['type'].isin(['Associated Technology']) &
+                                    user_data['content'].isin([tech]))]
+            user_data.to_excel('tweetsa_user_data.xlsx', index=False)
+
+    add_btn = tk.ttk.Button(kw_tech_win, text='Add', command=add_tech)
+    add_btn.grid(row=9, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    remove_btn = tk.ttk.Button(kw_tech_win, text='Remove', command=remove_tech)
+    remove_btn.grid(row=9, column=5, rowspan=2, columnspan=2, sticky='nwse')
+    bck_btn = tk.ttk.Button(kw_tech_win, text='Back', command=kw_tech.destroy)
+    bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
+    blank_label6 = tk.ttk.Label(kw_tech_win).grid(row=11, column=0, rowspan=2, columnspan=12)
 
     kw_tech_win.grid()
     kw_tech.wait_window()
@@ -319,18 +352,51 @@ def kw_concept(userid, keyword):
     require_data = user_data[user_data['userId'].isin([userid])]
     require_data = require_data[require_data['keyword'].isin([keyword])]
     require_data = require_data[require_data['type'].isin(['Correlated Concept'])]
-    require_ppl = require_data['content'].unique()
+    require_cpt = require_data['content'].unique()
 
     listScroll = tk.ttk.Scrollbar(kw_cpt_win, orient=tk.VERTICAL)
     listScroll.grid(row=5, column=10, rowspan=2, columnspan=1, sticky='nswe')
     listDisp = tk.Listbox(kw_cpt_win, selectmode=tk.BROWSE, yscrollcommand=listScroll.set, font=('Microsoft Light', 16))
     listDisp.grid(row=5, column=2, rowspan=2, columnspan=8, sticky='nswe')
 
-    for ppl in require_ppl:
-        listDisp.insert(tk.END, ppl)
+    for cpt in require_cpt:
+        listDisp.insert(tk.END, cpt)
     listScroll.config(command=listDisp.yview)
 
     blank_label4 = tk.ttk.Label(kw_cpt_win).grid(row=7, column=0, rowspan=2, columnspan=12)
+
+    def add_cpt():
+        simplified_add_page(userid, keyword, 'Correlated Concept')
+        listDisp.delete(0, tk.END)
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        require_data = user_data[user_data['userId'].isin([userid])]
+        require_data = require_data[require_data['keyword'].isin([keyword])]
+        require_data = require_data[require_data['type'].isin(['Correlated Concept'])]
+        require_cpt = require_data['content'].unique()
+
+        for cpt in require_cpt:
+            listDisp.insert(tk.END, cpt)
+
+    def remove_cpt():
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        msgBox = tk.messagebox.askyesno('App System Notifications', 'Do you want to delete this item?')
+        if msgBox:
+            tech = listDisp.get(tk.ACTIVE)
+            listDisp.delete(tk.ACTIVE)
+
+            user_data = user_data[~(user_data['userId'].isin([userid]) &
+                                    user_data['keyword'].isin([keyword]) &
+                                    user_data['type'].isin(['Correlated Concept']) &
+                                    user_data['content'].isin([tech]))]
+            user_data.to_excel('tweetsa_user_data.xlsx', index=False)
+
+    add_btn = tk.ttk.Button(kw_cpt_win, text='Add', command=add_cpt)
+    add_btn.grid(row=9, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    remove_btn = tk.ttk.Button(kw_cpt_win, text='Remove', command=remove_cpt)
+    remove_btn.grid(row=9, column=5, rowspan=2, columnspan=2, sticky='nwse')
+    bck_btn = tk.ttk.Button(kw_cpt_win, text='Back', command=kw_cpt.destroy)
+    bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
+    blank_label6 = tk.ttk.Label(kw_cpt_win).grid(row=11, column=0, rowspan=2, columnspan=12)
 
     kw_cpt_win.grid()
     kw_cpt.wait_window()
@@ -369,18 +435,51 @@ def kw_event(userid, keyword):
     require_data = user_data[user_data['userId'].isin([userid])]
     require_data = require_data[require_data['keyword'].isin([keyword])]
     require_data = require_data[require_data['type'].isin(['Influential Event'])]
-    require_ppl = require_data['content'].unique()
+    require_ev = require_data['content'].unique()
 
     listScroll = tk.ttk.Scrollbar(kw_ev_win, orient=tk.VERTICAL)
     listScroll.grid(row=5, column=10, rowspan=2, columnspan=1, sticky='nswe')
     listDisp = tk.Listbox(kw_ev_win, selectmode=tk.BROWSE, yscrollcommand=listScroll.set, font=('Microsoft Light', 16))
     listDisp.grid(row=5, column=2, rowspan=2, columnspan=8, sticky='nswe')
 
-    for ppl in require_ppl:
-        listDisp.insert(tk.END, ppl)
+    for ev in require_ev:
+        listDisp.insert(tk.END, ev)
     listScroll.config(command=listDisp.yview)
 
     blank_label4 = tk.ttk.Label(kw_ev_win).grid(row=7, column=0, rowspan=2, columnspan=12)
+
+    def add_ev():
+        simplified_add_page(userid, keyword, 'Influential Event')
+        listDisp.delete(0, tk.END)
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        require_data = user_data[user_data['userId'].isin([userid])]
+        require_data = require_data[require_data['keyword'].isin([keyword])]
+        require_data = require_data[require_data['type'].isin(['Influential Event'])]
+        require_ev = require_data['content'].unique()
+
+        for ev in require_ev:
+            listDisp.insert(tk.END, ev)
+
+    def remove_ev():
+        user_data = pd.read_excel(resource_path('tweetsa_user_data.xlsx'), engine='openpyxl')
+        msgBox = tk.messagebox.askyesno('App System Notifications', 'Do you want to delete this item?')
+        if msgBox:
+            tech = listDisp.get(tk.ACTIVE)
+            listDisp.delete(tk.ACTIVE)
+
+            user_data = user_data[~(user_data['userId'].isin([userid]) &
+                                    user_data['keyword'].isin([keyword]) &
+                                    user_data['type'].isin(['Influential Event']) &
+                                    user_data['content'].isin([tech]))]
+            user_data.to_excel('tweetsa_user_data.xlsx', index=False)
+
+    add_btn = tk.ttk.Button(kw_ev_win, text='Add', command=add_ev)
+    add_btn.grid(row=9, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    remove_btn = tk.ttk.Button(kw_ev_win, text='Remove', command=remove_ev)
+    remove_btn.grid(row=9, column=5, rowspan=2, columnspan=2, sticky='nwse')
+    bck_btn = tk.ttk.Button(kw_ev_win, text='Back', command=kw_ev.destroy)
+    bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
+    blank_label6 = tk.ttk.Label(kw_ev_win).grid(row=11, column=0, rowspan=2, columnspan=12)
 
     kw_ev_win.grid()
     kw_ev.wait_window()
