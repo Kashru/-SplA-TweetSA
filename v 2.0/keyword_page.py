@@ -306,7 +306,11 @@ def kw_people(userid, keyword):
 
         df = TweetsSearch(sppl, date, date2, retweets, faves, max_ac)
 
-        show(df)
+        if not df.empty:
+            show(df)
+        else:
+            tk.messagebox.showwarning(title='App System Warning', message='No data was fetched. Please try again after '
+                                                                          'changing the current parameter setting.')
 
     def kw_ppl_wordfre():
         date = date_entry.get_date()
@@ -349,8 +353,32 @@ def kw_people(userid, keyword):
         sppl = support + ' ' + sppl
 
         df = TweetCo_occurrence(support, sppl, date, date2, retweets, faves, max_ac)
+        if not df.empty:
+            show(df)
 
-        show(df)
+    def kw_ppl_sentiment():
+        date = date_entry.get_date()
+        date = str(date)
+        date2 = date_entry2.get_date()
+        date2 = str(date2)
+        retweets = retweets_var.get()
+        faves = faves_var.get()
+        max_ac = max_ac_var.get()
+        include_rt = include_rt_var.get()
+        support = support_var.get()
+
+        sppl = 'from:' + listDisp.get(tk.ACTIVE)
+        print(sppl)
+
+        if include_rt == 'No':
+            sppl = sppl + ' -RT'
+
+        sppl = support + ' ' + sppl
+
+        df = TweetSentiment(sppl, date, date2, retweets, faves, max_ac)
+
+        if not df.empty:
+            show(df)
 
     search_btn = tk.ttk.Button(kw_ppl_win, text='Search', command=kw_ppl_search)
     search_btn.grid(row=19, column=7, rowspan=3, columnspan=4, sticky='nswe')
@@ -360,6 +388,9 @@ def kw_people(userid, keyword):
 
     cooc_btn = tk.ttk.Button(kw_ppl_win, text='Analyze Co-occurrence', command=kw_ppl_cooc)
     cooc_btn.grid(row=27, column=7, rowspan=3, columnspan=4, sticky='nswe')
+
+    sentiment_btn = tk.ttk.Button(kw_ppl_win, text='Analyze Sentiment', command=kw_ppl_sentiment)
+    sentiment_btn.grid(row=31, column=7, rowspan=3, columnspan=4, sticky='nswe')
 
     blank_label8 = tk.ttk.Label(kw_ppl_win).grid(row=33, column=0, rowspan=2, columnspan=12)
 

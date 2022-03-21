@@ -167,7 +167,7 @@ def TweetsSearch(keyword, start_date, end_date, min_retweets=100, min_faves=100,
     return tbt
 
 
-#print(TweetsSearch('bitcoin', '2022-03-07', '2022-3-21', 300, 300))
+# print(TweetsSearch('bitcoin', '2022-03-07', '2022-3-21', 300, 300))
 
 
 def TweetUserRelevant(keyword, start_date, end_date, min_retweets=100, min_faves=100, item_num=300):
@@ -211,14 +211,14 @@ def TweetUserRelevant(keyword, start_date, end_date, min_retweets=100, min_faves
     fig, ax = plt.subplots(figsize=(16, 12))
 
     # Plot horizontal bar graph
-    tbt_user.sort_values(by='Counts').plot.barh(x='User',  y='Counts', ax=ax, color=color)
+    tbt_user.sort_values(by='Counts').plot.barh(x='User', y='Counts', ax=ax, color=color)
 
     ax.set_title("Most Relevant Users for this Search")
 
     plt.show()
 
 
-#TweetUserRelevant('bitcoin', '2022-3-7', '2022-3-21', 100, 100, 300)
+# TweetUserRelevant('bitcoin', '2022-3-7', '2022-3-21', 100, 100, 300)
 
 
 def remove_url(txt):
@@ -302,15 +302,19 @@ def TweetAnalyze(collection_word, keyword, start_date, end_date, min_retweets=10
 
     fig, ax = plt.subplots(figsize=(15, 15))
 
-    # Plot horizontal bar graph
-    clean_tweets_ncw.sort_values(by='count').plot.barh(x='words',
-                                                       y='count',
-                                                       ax=ax,
-                                                       color=color)
+    try:
+        # Plot horizontal bar graph
+        clean_tweets_ncw.sort_values(by='count').plot.barh(x='words',
+                                                           y='count',
+                                                           ax=ax,
+                                                           color=color)
 
-    ax.set_title("Common Words Found in Tweets")
+        ax.set_title("Common Words Found in Tweets")
 
-    plt.show()
+        plt.show()
+    except TypeError:
+        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to plot. Please try again after '
+                                                                           'changing the current parameter setting.')
 
 
 def TweetCo_occurrence(collection_word, keyword, start_date, end_date, min_retweets=100, min_faves=100, item_num=300):
@@ -386,34 +390,38 @@ def TweetCo_occurrence(collection_word, keyword, start_date, end_date, min_retwe
     # Create network plot
     G = nx.Graph()
 
-    # Create connections between nodes
-    for k, v in d[0].items():
-        G.add_edge(k[0], k[1], weight=(v * 10))
+    try:
+        # Create connections between nodes
+        for k, v in d[0].items():
+            G.add_edge(k[0], k[1], weight=(v * 10))
 
-    G.add_node("china", weight=100)
+        G.add_node("china", weight=100)
 
-    fig, ax = plt.subplots(figsize=(10, 8))
+        fig, ax = plt.subplots(figsize=(10, 8))
 
-    pos = nx.spring_layout(G, k=2)
+        pos = nx.spring_layout(G, k=2)
 
-    # Plot networks
-    nx.draw_networkx(G, pos,
-                     font_size=16,
-                     width=4,
-                     edge_color='grey',
-                     node_color='#1DA1F2',
-                     with_labels=False,
-                     ax=ax)
+        # Plot networks
+        nx.draw_networkx(G, pos,
+                         font_size=16,
+                         width=4,
+                         edge_color='grey',
+                         node_color='#1DA1F2',
+                         with_labels=False,
+                         ax=ax)
 
-    # Create offset labels
-    for key, value in pos.items():
-        x, y = value[0] + .135, value[1] + .045
-        ax.text(x, y,
-                s=key,
-                bbox=dict(facecolor='red', alpha=0.25),
-                horizontalalignment='center', fontsize=13)
+        # Create offset labels
+        for key, value in pos.items():
+            x, y = value[0] + .135, value[1] + .045
+            ax.text(x, y,
+                    s=key,
+                    bbox=dict(facecolor='red', alpha=0.25),
+                    horizontalalignment='center', fontsize=13)
 
-    plt.show()
+        plt.show()
+    except IndexError:
+        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to plot. Please try again after '
+                                                                           'changing the current parameter setting.')
     return bigram_df
 
 
@@ -451,11 +459,20 @@ def TweetSentiment(keyword, start_date, end_date, min_retweets=100, min_faves=10
 
     fig, ax = plt.subplots(figsize=(12, 8))
 
-    # Plot histogram with break at zero
-    sentiment_df.hist(bins=[-1, -0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75, 1],
-                      ax=ax,
-                      color="purple")
+    try:
+        # Plot histogram with break at zero
+        sentiment_df.hist(
+            bins=[-1, -0.875, -0.75, -0.625, -0.5, -0.375, -0.25, -0.125, 0.0, 0.125, 0.25, 0.375, 0.5, 0.625,
+                  0.75, 0.875, 1],
+            ax=ax,
+            color='#1DA1F2')
 
-    plt.title("Sentiments from Retrieved Tweets")
-    plt.show()
+        plt.title("Sentiments from Retrieved Tweets")
+        plt.xlabel('Sentiment Score')
+        plt.ylabel('Count')
+        plt.show()
+    except ValueError:
+        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to plot. Please try again after '
+                                                                           'changing the current parameter setting.')
+
     return sentiment_df
