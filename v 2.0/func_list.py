@@ -210,12 +210,16 @@ def TweetUserRelevant(keyword, start_date, end_date, min_retweets=100, min_faves
 
     fig, ax = plt.subplots(figsize=(16, 12))
 
-    # Plot horizontal bar graph
-    tbt_user.sort_values(by='Counts').plot.barh(x='User', y='Counts', ax=ax, color=color)
+    try:
+        # Plot horizontal bar graph
+        tbt_user.sort_values(by='Counts').plot.barh(x='User', y='Counts', ax=ax, color=color)
 
-    ax.set_title("Most Relevant Users for this Search")
+        ax.set_title("Most Relevant Users")
 
-    plt.show()
+        plt.show()
+    except IndexError:
+        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to display. Please try again after '
+                                                                           'changing the current parameter setting.')
 
 
 # TweetUserRelevant('bitcoin', '2022-3-7', '2022-3-21', 100, 100, 300)
@@ -238,7 +242,7 @@ def remove_url(txt):
     return " ".join(re.sub("([^0-9A-Za-z \t])|(\w+:\/\/\S+)", "", txt).split())
 
 
-def TweetAnalyze(collection_word, keyword, start_date, end_date, min_retweets=100, min_faves=100, item_num=300):
+def TweetAnalyze(collection_word1, collection_word2, keyword, start_date, end_date, min_retweets=100, min_faves=100, item_num=300):
     consumer_key = 'K3PCazIaerCRxhhnonBwgPtla'
     consumer_secret = 'xUHhL7WHolpwVonQpOONfWCd6XjulxO71rDFF4L1Ty2ubt5mVs'
     access_token = '1495603708045844482-lVmoLmBvY7iEyIkNNbMyp1sQf8KNwk'
@@ -286,7 +290,7 @@ def TweetAnalyze(collection_word, keyword, start_date, end_date, min_retweets=10
                                     columns=['words', 'count'])
 
     # Remove collection words
-    collection_words = [collection_word]
+    collection_words = [collection_word1, collection_word2]
 
     tweets_nsw_nc = [[w for w in word if not w in collection_words]
                      for word in tweets_nsw]
@@ -313,7 +317,7 @@ def TweetAnalyze(collection_word, keyword, start_date, end_date, min_retweets=10
 
         plt.show()
     except TypeError:
-        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to plot. Please try again after '
+        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to display. Please try again after '
                                                                            'changing the current parameter setting.')
 
 
@@ -420,7 +424,7 @@ def TweetCo_occurrence(collection_word, keyword, start_date, end_date, min_retwe
 
         plt.show()
     except IndexError:
-        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to plot. Please try again after '
+        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to display. Please try again after '
                                                                            'changing the current parameter setting.')
     return bigram_df
 
@@ -472,7 +476,7 @@ def TweetSentiment(keyword, start_date, end_date, min_retweets=100, min_faves=10
         plt.ylabel('Count')
         plt.show()
     except ValueError:
-        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to plot. Please try again after '
+        tkinter.messagebox.showwarning(title='App System Warning', message='Nothing to display. Please try again after '
                                                                            'changing the current parameter setting.')
 
     return sentiment_df
