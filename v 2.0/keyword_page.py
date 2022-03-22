@@ -398,7 +398,7 @@ def kw_people(userid, keyword):
     kw_ppl.wait_window()
 
 
-#kw_people('test111', 'eth')
+kw_people('test111', 'eth')
 
 
 def kw_technology(userid, keyword):
@@ -674,7 +674,7 @@ def kw_technology(userid, keyword):
     kw_tech.wait_window()
 
 
-kw_technology('test111', 'eth')
+#kw_technology('test111', 'eth')
 
 
 def kw_concept(userid, keyword):
