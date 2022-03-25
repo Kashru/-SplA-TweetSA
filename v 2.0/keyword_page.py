@@ -949,7 +949,7 @@ def kw_concept(userid, keyword):
     kw_cpt.wait_window()
 
 
-kw_concept('test111', 'eth')
+# kw_concept('test111', 'eth')
 
 
 def kw_event(userid, keyword):
@@ -1031,7 +1031,199 @@ def kw_event(userid, keyword):
     bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
     blank_label6 = tk.ttk.Label(kw_ev_win).grid(row=11, column=0, rowspan=2, columnspan=12)
 
+    func_title = tk.ttk.Label(kw_ev_win, text='---------------Functional Section: Search and Analyze---------------',
+                              font=("Times New Roman", 16, 'bold')).grid(row=13, column=0, rowspan=2, columnspan=12)
+
+    blank_label7 = tk.ttk.Label(kw_ev_win).grid(row=15, column=0, rowspan=2, columnspan=12)
+
+    setting_label = tk.ttk.Label(kw_ev_win, text='▼ Basic parameter settings ▼', font=("Times New Roman", 14, 'bold')) \
+        .grid(row=17, column=2, rowspan=2, columnspan=3)
+
+    retweets_var = tk.IntVar()
+    faves_var = tk.IntVar()
+    max_ac_var = tk.IntVar()
+    include_rt_var = tk.StringVar()
+    support_var = tk.StringVar()
+
+    date_label = tk.ttk.Label(kw_ev_win, text='Since', font=('calibre', 10, 'bold'))
+    date_entry = DateEntry(kw_ev_win)
+
+    date_label2 = tk.ttk.Label(kw_ev_win, text='Until', font=('calibre', 10, 'bold'))
+    date_entry2 = DateEntry(kw_ev_win)
+
+    retweets_label = tk.ttk.Label(kw_ev_win, text='Min Retweets', font=('calibre', 10, 'bold'))
+    retweets_entry = tk.ttk.Entry(kw_ev_win, textvariable=retweets_var, font=('calibre', 10, 'normal'))
+    retweets_var.set(100)
+
+    faves_label = tk.ttk.Label(kw_ev_win, text='Min Favorites', font=('calibre', 10, 'bold'))
+    faves_entry = tk.ttk.Entry(kw_ev_win, textvariable=faves_var, font=('calibre', 10, 'normal'))
+    faves_var.set(100)
+
+    max_ac_label = tk.ttk.Label(kw_ev_win, text='Max Acquisitions', font=('calibre', 10, 'bold'))
+    max_ac_entry = tk.ttk.Entry(kw_ev_win, textvariable=max_ac_var, font=('calibre', 10, 'normal'))
+    max_ac_var.set(300)
+
+    include_label = tk.ttk.Label(kw_ev_win, text='Include Retweets', font=('calibre', 10, 'bold'))
+    include_entry = tk.ttk.Combobox(kw_ev_win, textvariable=include_rt_var)
+    include_entry['values'] = ('Yes', 'No')
+    include_rt_var.set('No')
+
+    support_label = tk.ttk.Label(kw_ev_win, text='Auxiliary Keywords', font=('calibre', 10, 'bold'))
+    support_entry = tk.ttk.Entry(kw_ev_win, textvariable=support_var, font=('calibre', 10, 'normal'))
+    support_var.set(keyword)
+
+    date_label.grid(row=19, column=2, rowspan=2, columnspan=1, sticky='nswe')
+    date_entry.grid(row=19, column=3, rowspan=2, columnspan=2, sticky='nswe')
+    date_label2.grid(row=21, column=2, rowspan=2, columnspan=1, sticky='nswe')
+    date_entry2.grid(row=21, column=3, rowspan=2, columnspan=2, sticky='nswe')
+    retweets_label.grid(row=23, column=2, rowspan=2, columnspan=1, sticky='nswe')
+    retweets_entry.grid(row=23, column=3, rowspan=2, columnspan=2, sticky='nswe')
+    faves_label.grid(row=25, column=2, rowspan=2, columnspan=1, sticky='nswe')
+    faves_entry.grid(row=25, column=3, rowspan=2, columnspan=2, sticky='nswe')
+    max_ac_label.grid(row=27, column=2, rowspan=2, columnspan=1, sticky='nswe')
+    max_ac_entry.grid(row=27, column=3, rowspan=2, columnspan=2, sticky='nswe')
+    include_label.grid(row=29, column=2, rowspan=2, columnspan=1, sticky='nswe')
+    include_entry.grid(row=29, column=3, rowspan=2, columnspan=2, sticky='nswe')
+    support_label.grid(row=31, column=2, rowspan=2, columnspan=1, sticky='nswe')
+    support_entry.grid(row=31, column=3, rowspan=2, columnspan=2, sticky='nswe')
+
+    def kw_ev_search():
+        date = date_entry.get_date()
+        date = str(date)
+        date2 = date_entry2.get_date()
+        date2 = str(date2)
+        retweets = retweets_var.get()
+        faves = faves_var.get()
+        max_ac = max_ac_var.get()
+        include_rt = include_rt_var.get()
+        support = support_var.get()
+
+        key = listDisp.get(tk.ACTIVE)
+        print(key)
+
+        if include_rt == 'No':
+            key = key + ' -RT'
+
+        key = support + ' ' + key
+
+        df = TweetsSearch(key, date, date2, retweets, faves, max_ac)
+
+        if not df.empty:
+            show(df)
+        else:
+            tk.messagebox.showwarning(title='App System Warning', message='No data was fetched. Please try again after '
+                                                                          'changing the current parameter setting.')
+
+    def kw_ev_wordfre():
+        date = date_entry.get_date()
+        date = str(date)
+        date2 = date_entry2.get_date()
+        date2 = str(date2)
+        retweets = retweets_var.get()
+        faves = faves_var.get()
+        max_ac = max_ac_var.get()
+        include_rt = include_rt_var.get()
+        support = support_var.get()
+
+        key = listDisp.get(tk.ACTIVE)
+        print(key)
+
+        if include_rt == 'No':
+            key = key + ' -RT'
+
+        key = support + ' ' + key
+
+        TweetAnalyze(support, listDisp.get(tk.ACTIVE), key, date, date2, retweets, faves, max_ac)
+
+    def kw_ev_cooc():
+        date = date_entry.get_date()
+        date = str(date)
+        date2 = date_entry2.get_date()
+        date2 = str(date2)
+        retweets = retweets_var.get()
+        faves = faves_var.get()
+        max_ac = max_ac_var.get()
+        include_rt = include_rt_var.get()
+        support = support_var.get()
+
+        key = listDisp.get(tk.ACTIVE)
+        print(key)
+
+        if include_rt == 'No':
+            key = key + ' -RT'
+
+        key = support + ' ' + key
+
+        df = TweetCo_occurrence(support, key, date, date2, retweets, faves, max_ac)
+        if not df.empty:
+            show(df)
+
+    def kw_ev_sentiment():
+        date = date_entry.get_date()
+        date = str(date)
+        date2 = date_entry2.get_date()
+        date2 = str(date2)
+        retweets = retweets_var.get()
+        faves = faves_var.get()
+        max_ac = max_ac_var.get()
+        include_rt = include_rt_var.get()
+        support = support_var.get()
+
+        key = listDisp.get(tk.ACTIVE)
+        print(key)
+
+        if include_rt == 'No':
+            key = key + ' -RT'
+
+        key = support + ' ' + key
+
+        df = TweetSentiment(key, date, date2, retweets, faves, max_ac)
+
+        if not df.empty:
+            show(df)
+
+    def kw_ev_user():
+        date = date_entry.get_date()
+        date = str(date)
+        date2 = date_entry2.get_date()
+        date2 = str(date2)
+        retweets = retweets_var.get()
+        faves = faves_var.get()
+        max_ac = max_ac_var.get()
+        include_rt = include_rt_var.get()
+        support = support_var.get()
+
+        key = listDisp.get(tk.ACTIVE)
+        print(key)
+
+        if include_rt == 'No':
+            key = key + ' -RT'
+
+        key = support + ' ' + key
+
+        TweetUserRelevant(key, date, date2, retweets, faves, max_ac)
+
+    search_btn = tk.ttk.Button(kw_ev_win, text='Search', command=kw_ev_search)
+    search_btn.grid(row=15, column=6, rowspan=3, columnspan=4, sticky='nswe')
+
+    user_btn = tk.ttk.Button(kw_ev_win, text='Most Relevant Users', command=kw_ev_user)
+    user_btn.grid(row=19, column=6, rowspan=3, columnspan=4, sticky='nswe')
+
+    wordfre_btn = tk.ttk.Button(kw_ev_win, text='Analyze Word Frequency   ', command=kw_ev_wordfre)
+    wordfre_btn.grid(row=23, column=6, rowspan=3, columnspan=4, sticky='nswe')
+
+    cooc_btn = tk.ttk.Button(kw_ev_win, text='Analyze Co-occurrence', command=kw_ev_cooc)
+    cooc_btn.grid(row=27, column=6, rowspan=3, columnspan=4, sticky='nswe')
+
+    sentiment_btn = tk.ttk.Button(kw_ev_win, text='Analyze Sentiment', command=kw_ev_sentiment)
+    sentiment_btn.grid(row=31, column=6, rowspan=3, columnspan=4, sticky='nswe')
+
+    blank_label8 = tk.ttk.Label(kw_ev_win).grid(row=33, column=0, rowspan=2, columnspan=12)
+
     kw_ev_win.grid()
     kw_ev.wait_window()
+
+
+kw_event('test111', 'eth')
 
 # keyword_page('test111', 'btc')
