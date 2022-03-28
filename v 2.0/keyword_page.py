@@ -1224,6 +1224,6 @@ def kw_event(userid, keyword):
     kw_ev.wait_window()
 
 
-kw_event('test111', 'eth')
+# kw_event('test111', 'eth')
 
 # keyword_page('test111', 'btc')

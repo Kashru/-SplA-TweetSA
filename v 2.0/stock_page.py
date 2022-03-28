@@ -121,4 +121,4 @@ def stock_page(userid):
     main.mainloop()
 
 
-stock_page('test111')
+# stock_page('test111')
