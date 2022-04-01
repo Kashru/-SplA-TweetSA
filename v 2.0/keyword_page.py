@@ -15,6 +15,7 @@ import sys
 import os
 from openpyxl import Workbook
 from func_list import *
+from remark_page import *
 
 
 def resource_path(relative_path):
@@ -221,12 +222,18 @@ def kw_people(userid, keyword):
                                     user_data['content'].isin([ppl]))]
             user_data.to_excel('tweetsa_user_data.xlsx', index=False)
 
+    def remark_ppl():
+        ppl = listDisp.get(tk.ACTIVE)
+        remark_page(userid, keyword, 'Significant Related Persons', ppl)
+
     add_btn = tk.ttk.Button(kw_ppl_win, text='Add', command=add_ppl)
-    add_btn.grid(row=9, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    add_btn.grid(row=9, column=8, rowspan=2, columnspan=2, sticky='nwse')
     remove_btn = tk.ttk.Button(kw_ppl_win, text='Remove', command=remove_ppl)
-    remove_btn.grid(row=9, column=4, rowspan=2, columnspan=3, sticky='nwse')
+    remove_btn.grid(row=9, column=6, rowspan=2, columnspan=2, sticky='nwse')
     bck_btn = tk.ttk.Button(kw_ppl_win, text='Back', command=kw_ppl.destroy)
     bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
+    remark_btn = tk.ttk.Button(kw_ppl_win, text='Remark', command=remark_ppl)
+    remark_btn.grid(row=9, column=4, rowspan=2, columnspan=2, sticky='nwse')
     blank_label6 = tk.ttk.Label(kw_ppl_win).grid(row=11, column=0, rowspan=2, columnspan=12)
 
     func_title = tk.ttk.Label(kw_ppl_win, text='---------------Functional Section: Search and Analyze---------------',
@@ -473,12 +480,18 @@ def kw_technology(userid, keyword):
                                     user_data['content'].isin([tech]))]
             user_data.to_excel('tweetsa_user_data.xlsx', index=False)
 
+    def remark_tech():
+        tech = listDisp.get(tk.ACTIVE)
+        remark_page(userid, keyword, 'Associated Technology', tech)
+
     add_btn = tk.ttk.Button(kw_tech_win, text='Add', command=add_tech)
-    add_btn.grid(row=9, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    add_btn.grid(row=9, column=8, rowspan=2, columnspan=2, sticky='nwse')
     remove_btn = tk.ttk.Button(kw_tech_win, text='Remove', command=remove_tech)
-    remove_btn.grid(row=9, column=5, rowspan=2, columnspan=2, sticky='nwse')
+    remove_btn.grid(row=9, column=6, rowspan=2, columnspan=2, sticky='nwse')
     bck_btn = tk.ttk.Button(kw_tech_win, text='Back', command=kw_tech.destroy)
     bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
+    remark_btn = tk.ttk.Button(kw_tech_win, text='Remark', command=remark_tech)
+    remark_btn.grid(row=9, column=4, rowspan=2, columnspan=2, sticky='nwse')
     blank_label6 = tk.ttk.Label(kw_tech_win).grid(row=11, column=0, rowspan=2, columnspan=12)
 
     func_title = tk.ttk.Label(kw_tech_win, text='---------------Functional Section: Search and Analyze---------------',
@@ -748,12 +761,18 @@ def kw_concept(userid, keyword):
                                     user_data['content'].isin([tech]))]
             user_data.to_excel('tweetsa_user_data.xlsx', index=False)
 
+    def remark_cpt():
+        tech = listDisp.get(tk.ACTIVE)
+        remark_page(userid, keyword, 'Correlated Concept', tech)
+
     add_btn = tk.ttk.Button(kw_cpt_win, text='Add', command=add_cpt)
-    add_btn.grid(row=9, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    add_btn.grid(row=9, column=8, rowspan=2, columnspan=2, sticky='nwse')
     remove_btn = tk.ttk.Button(kw_cpt_win, text='Remove', command=remove_cpt)
-    remove_btn.grid(row=9, column=5, rowspan=2, columnspan=2, sticky='nwse')
+    remove_btn.grid(row=9, column=6, rowspan=2, columnspan=2, sticky='nwse')
     bck_btn = tk.ttk.Button(kw_cpt_win, text='Back', command=kw_cpt.destroy)
     bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
+    remark_btn = tk.ttk.Button(kw_cpt_win, text='Remark', command=remark_cpt)
+    remark_btn.grid(row=9, column=4, rowspan=2, columnspan=2, sticky='nwse')
     blank_label6 = tk.ttk.Label(kw_cpt_win).grid(row=11, column=0, rowspan=2, columnspan=12)
 
     func_title = tk.ttk.Label(kw_cpt_win, text='---------------Functional Section: Search and Analyze---------------',
@@ -1023,12 +1042,18 @@ def kw_event(userid, keyword):
                                     user_data['content'].isin([tech]))]
             user_data.to_excel('tweetsa_user_data.xlsx', index=False)
 
+    def remark_ev():
+        tech = listDisp.get(tk.ACTIVE)
+        remark_page(userid, keyword, 'Correlated Concept', tech)
+
     add_btn = tk.ttk.Button(kw_ev_win, text='Add', command=add_ev)
-    add_btn.grid(row=9, column=7, rowspan=2, columnspan=3, sticky='nwse')
+    add_btn.grid(row=9, column=8, rowspan=2, columnspan=2, sticky='nwse')
     remove_btn = tk.ttk.Button(kw_ev_win, text='Remove', command=remove_ev)
-    remove_btn.grid(row=9, column=5, rowspan=2, columnspan=2, sticky='nwse')
+    remove_btn.grid(row=9, column=6, rowspan=2, columnspan=2, sticky='nwse')
     bck_btn = tk.ttk.Button(kw_ev_win, text='Back', command=kw_ev.destroy)
     bck_btn.grid(row=9, column=2, rowspan=2, columnspan=2, sticky='nwse')
+    remark_btn = tk.ttk.Button(kw_ev_win, text='Remark', command=remark_ev)
+    remark_btn.grid(row=9, column=4, rowspan=2, columnspan=2, sticky='nwse')
     blank_label6 = tk.ttk.Label(kw_ev_win).grid(row=11, column=0, rowspan=2, columnspan=12)
 
     func_title = tk.ttk.Label(kw_ev_win, text='---------------Functional Section: Search and Analyze---------------',

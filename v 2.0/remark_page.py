@@ -47,8 +47,6 @@ def new_remark(userid, keyword, type, content):
         tkinter.messagebox.showinfo('App System Notifications', message='The remark for this item has been updated.')
         n_rm.destroy()
 
-
-
     global img12
     global resized_img12
     global new_img12
@@ -136,12 +134,12 @@ def remark_page(userid, keyword, kw_type, content):
     blank_label = tk.ttk.Label(remark_win).grid(row=2, column=0, rowspan=1, columnspan=12)
     blank_label2 = tk.ttk.Label(remark_win, text='    ').grid(row=3, column=0, rowspan=2, columnspan=2)
     blank_label3 = tk.ttk.Label(remark_win, text='    ').grid(row=3, column=8, rowspan=2, columnspan=2)
-    list_label = tk.ttk.Label(remark_win, text=keyword+': '+content,
+    list_label = tk.ttk.Label(remark_win, text=keyword + ': ' + content,
                               font=("Times New Roman", 18, 'bold'), justify='center'). \
         grid(row=3, column=2, rowspan=2, columnspan=8)
 
     blank_label4 = tk.ttk.Label(remark_win).grid(row=5, column=8, rowspan=2, columnspan=12)
-    old_message = tk.Message(remark_win, text=remark_text, width=200, anchor='w', font=("Times New Roman", 16))
+    old_message = tk.Message(remark_win, text=remark_text, width=400, anchor='w', font=("Times New Roman", 16))
     old_message.grid(row=7, column=0, rowspan=2, columnspan=12)
     blank_label5 = tk.ttk.Label(remark_win).grid(row=9, column=8, rowspan=2, columnspan=12)
 
@@ -166,7 +164,7 @@ def remark_page(userid, keyword, kw_type, content):
                 new_remark_text = new_require_data['remark'].unique()[0]
 
         old_message.grid_remove()
-        tk.Message(remark_win, text=new_remark_text, width=200, anchor='w',
+        tk.Message(remark_win, text=new_remark_text, width=400, anchor='w',
                    font=("Times New Roman", 16)).grid(row=7, column=0, rowspan=2, columnspan=12)
 
     edit_btn = tk.ttk.Button(remark_win, text='Edit', command=edit_remark)
@@ -178,5 +176,4 @@ def remark_page(userid, keyword, kw_type, content):
     remark_win.grid()
     remark.wait_window()
 
-
-remark_page('test111', 'eth', 'Associated Technology', 'blockchain')
+# remark_page('test111', 'eth', 'Associated Technology', 'blockchain')
