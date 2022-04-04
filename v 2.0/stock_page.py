@@ -117,6 +117,8 @@ def stock_page(userid):
     process_btn = tk.ttk.Button(main_win, text='Process', command=lambda: process(userid))
     process_btn.grid(row=10, column=5, rowspan=2, columnspan=1, sticky='nswe')
 
+    blank_label = tk.ttk.Label(main_win).grid(row=12, column=0, rowspan=2, columnspan=10)
+
     main_win.grid()
     main.mainloop()
 
