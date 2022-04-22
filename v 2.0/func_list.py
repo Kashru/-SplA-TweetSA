@@ -459,7 +459,7 @@ def TweetSentiment(keyword, start_date, end_date, min_retweets=100, min_faves=10
     sentiment_df = pd.DataFrame(sentiment_values, columns=["polarity", "tweet"])
 
     # Remove polarity values equal to zero
-    sentiment_df = sentiment_df[sentiment_df.polarity != 0]
+    # sentiment_df = sentiment_df[sentiment_df.polarity != 0]
 
     fig, ax = plt.subplots(figsize=(12, 8))
 

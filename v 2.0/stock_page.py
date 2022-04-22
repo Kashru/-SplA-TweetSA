@@ -99,7 +99,8 @@ def stock_page(userid):
     listDisp = tk.Listbox(main_win, selectmode=tk.BROWSE, yscrollcommand=listScroll.set, font=('Microsoft Light', 16))
     listDisp.grid(row=6, column=1, rowspan=2, columnspan=6, sticky='nswe')
 
-    keyword_list = user_data['keyword'].unique()
+    require_data = user_data[user_data['userId'].isin([userid])]
+    keyword_list = require_data['keyword'].unique()
     for kw in keyword_list:
         listDisp.insert(tk.END, kw)
     listScroll.config(command=listDisp.yview)
@@ -122,5 +123,4 @@ def stock_page(userid):
     main_win.grid()
     main.mainloop()
 
-
-# stock_page('test111')
+stock_page('test112')
